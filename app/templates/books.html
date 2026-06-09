@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>도서 목록</h2>
+
+<table class="table table-bordered table-hover mt-3">
+    <thead class="table-light">
+    <tr>
+        <th>ID</th>
+        <th>제목</th>
+        <th>저자</th>
+        <th>재고</th>
+        <th>대여</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.stock }}</td>
+        <td>
+            {% if book.stock > 0 and users %}
+            <form method="post" action="/rentals-page" class="d-flex gap-2">
+                <input type="hidden" name="book_id" value="{{ book.id }}">
+
+                <select name="user_id" class="form-select form-select-sm">
+                    {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <button class="btn btn-primary btn-sm" type="submit">
+                    대여
+                </button>
+            </form>
+            {% else %}
+            <span class="text-muted">대여 불가</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

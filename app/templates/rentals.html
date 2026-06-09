@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>대여 현황</h2>
+
+<table class="table table-bordered table-hover mt-3">
+    <thead class="table-light">
+    <tr>
+        <th>대여 ID</th>
+        <th>사용자</th>
+        <th>도서</th>
+        <th>대여일</th>
+        <th>반납일</th>
+        <th>상태</th>
+        <th>반납</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for rental in rentals %}
+    <tr>
+        <td>{{ rental.rental_id }}</td>
+        <td>{{ rental.user_name }}</td>
+        <td>{{ rental.book_title }}</td>
+        <td>{{ rental.rental_date }}</td>
+        <td>{{ rental.return_date if rental.return_date else "-" }}</td>
+        <td>{{ rental.status }}</td>
+        <td>
+            {% if rental.status == "RENTED" %}
+            <form
+                method="post"
+                action="/rentals-page/{{ rental.rental_id }}/return"
+            >
+                <button class="btn btn-warning btn-sm" type="submit">
+                    반납
+                </button>
+            </form>
+            {% else %}
+            <span class="text-muted">완료</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

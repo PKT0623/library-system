@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>관리자 페이지</h2>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <h4>사용자 등록</h4>
+
+        <form method="post" action="/admin/users">
+            <div class="mb-3">
+                <label class="form-label">이름</label>
+                <input class="form-control" type="text" name="name" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">이메일</label>
+                <input class="form-control" type="email" name="email" required>
+            </div>
+
+            <button class="btn btn-success" type="submit">
+                사용자 등록
+            </button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h4>도서 등록</h4>
+
+        <form method="post" action="/admin/books">
+            <div class="mb-3">
+                <label class="form-label">제목</label>
+                <input class="form-control" type="text" name="title" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">저자</label>
+                <input class="form-control" type="text" name="author" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">재고</label>
+                <input class="form-control" type="number" name="stock" min="0" required>
+            </div>
+
+            <button class="btn btn-success" type="submit">
+                도서 등록
+            </button>
+        </form>
+    </div>
+</div>
+
+<hr class="my-4">
+
+<h4>등록된 사용자</h4>
+<table class="table table-sm table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>이메일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h4 class="mt-4">등록된 도서</h4>
+<table class="table table-sm table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>제목</th>
+        <th>저자</th>
+        <th>재고</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.stock }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
